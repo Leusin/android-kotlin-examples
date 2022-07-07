@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "com.example.wordsapp-mergeDebugResources-20:/layout/activity_detail.xml",
+        "source": "com.example.wordsapp-main-23:/layout/activity_detail.xml"
+    },
+    {
+        "merged": "com.example.wordsapp-mergeDebugResources-20:/layout/fragment_letter_list.xml",
+        "source": "com.example.wordsapp-main-23:/layout/fragment_letter_list.xml"
+    },
+    {
+        "merged": "com.example.wordsapp-mergeDebugResources-20:/layout/activity_main.xml",
+        "source": "com.example.wordsapp-main-23:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.example.wordsapp-mergeDebugResources-20:/layout/item_view.xml",
+        "source": "com.example.wordsapp-main-23:/layout/item_view.xml"
+    },
+    {
+        "merged": "com.example.wordsapp-mergeDebugResources-20:/layout/fragment_word_list.xml",
+        "source": "com.example.wordsapp-main-23:/layout/fragment_word_list.xml"
+    }
+]

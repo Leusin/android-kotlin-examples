@@ -1,0 +1,4 @@
+#Thu Jul 07 15:12:51 KST 2022
+base.0=D\:\\Documents\\android-kotlin-examples\\android-basics-kotlin-words-app-activities\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+renamed.0=classes.dex
+path.0=classes.dex
