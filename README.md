@@ -1,5 +1,5 @@
 # android-kotlin-examples
-https://developer.android.com/courses/pathways
+https://developer.android.com/courses/pathways/android-basics-kotlin-unit-3
 
 + __words-app__
   + Fragment and the Navigation Component
