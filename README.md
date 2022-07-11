@@ -68,14 +68,31 @@ __지원 속성__
 
 
 1. ViewModel 클래스 에서 지원속성을 추가한다
-> private var _count = 0
-> val count: Int
->  get() = _count
+> private var _count = 0 <br>
+> val count: Int <br>
+> &nbsp;&nbsp;get() = _count
 
 2. UI 컨트롤로에서 읽기 전용 변수를 사용한다.
 > private var count = viewModel.count
 
 
 ### ViewModel의 수명주기
-
 Active나 Fragment의 범위가 유지되는 동안 `ViewModel`을 유지한다. `ViewModel`은 소유자가 화면 회전과 같은 구성 변경으로 인해 소멸되는 경우에도 소멸되지 않는다.
+
+__init 블록__
+> init {  }
++ Kotlin은 객체 인스턴스 초기화 중 필요한 초기 설정 코드를 배치하는 장소를 제공한다.
++ 이니셜라이저 블록에는 인스턴스가 처음 생성되어 초기화될 떄 실행된다.
+
+
+### ViewModel 채우기
+
+__지연 초기화__
++ Kotlin에서 속성을 나중에 초기화하려면 지연된 초기화를 의미하는`lateinit` 키워드를 사용한다.
++ 변수가 초기화 될 떄까지는 변수에 메모리가 할당되지 않는다 
++ 초기화하기 전에 변수에 엑세스를 하려고 하면 앱이 비정상 종료된다.
+
+__Array__
++ `List`와 비슷하지만 초기화될 떄 고정 크기를 가진다.
++ `Array` 는 크기를 확장하거나 축소할 수 없ek
++ `List` 는 `add()` 함수와 `remove()` 함수가 있어 크기를 늘리고 줄일 수 있다.
