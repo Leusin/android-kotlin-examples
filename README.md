@@ -8,7 +8,6 @@
 
 ## words-app
 
-
 ### Fragemnt Lifecycle
 > onCreate > onCreateView > onViewCreate > [ onStart > onPause > onStop ] > onDestroyView > onDestroy
 
@@ -79,6 +78,7 @@ Active나 Fragment의 범위가 유지되는 동안 `ViewModel`을 유지한다.
 + Kotlin은 객체 인스턴스 초기화 중 필요한 초기 설정 코드를 배치하는 장소를 제공한다.
 + 이니셜라이저 블록에는 인스턴스가 처음 생성되어 초기화될 떄 실행된다.
 
+
 ### ViewModel 채우기
 
 [ __지연 초기화__ ]
@@ -91,6 +91,7 @@ Active나 Fragment의 범위가 유지되는 동안 `ViewModel`을 유지한다.
 + `Array` 는 크기를 확장하거나 축소할 수 없ek
 + `List` 는 `add()` 함수와 `remove()` 함수가 있어 크기를 늘리고 줄일 수 있다.
 
+
 ### Dialogs
 
 [ __Context__ ]
@@ -100,3 +101,26 @@ Active나 Fragment의 범위가 유지되는 동안 `ViewModel`을 유지한다.
 [ __후행 람다 구문__ ]
 + 전달되는 마지막 인수가 함수이면 괄호 바깥에 람다 표현식을 배치할 수 있다
 + 람다를 관호 안에 배치하거나 바깥에 배치하여 코드를 작성하는 방법이 모두 허용된다
+
+
+###  Submit
+
+[ __텍스트 필드 오류 표시__ ]
++ 머티리얼 텍스필드에는 `TextInputLayout`에 요류 메시지를 표시하는 기능이 내장되어있다
++ 텍스트 필드에 오류를 표시하려면 코드에서 동적 또는 레이아웃 파일에서 정적 오류 표시하면 된다.
+> // Set error text <br>
+> passwordLayout.error = getString(R.string.error) <br>
+> // Clear error text <br>
+> passwordLayout.error = null  <br>
+
++ 시작 코드에는 `setErrorTextField(error: Boolean` 가 이미 정의 되어 있어 텍스트 필드에 오류를 설정할 수 있다
++ 오류 텍스트를 필드에 표시할지 예부에 따라 `true`나 `false`를 입력 매개변수로 사용하여 호출할 수 있다
+> private fun setErrorTextField(error: Boolean) {
+> &nbsp;&nbsp;if (error) {
+> &nbsp;&nbsp;&nbsp;&nbsp;binding.textField.isErrorEnabled = true
+> &nbsp;&nbsp;&nbsp;&nbsp;binding.textField.error = getString(R.string.try_again)
+> &nbsp;&nbsp;} else {
+> &nbsp;&nbsp;&nbsp;&nbsp;binding.textField.isErrorEnabled = false
+> &nbsp;&nbsp;&nbsp;&nbsp;binding.textInputEditText.text = null
+> &nbsp;&nbsp;}
+> }
