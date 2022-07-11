@@ -58,7 +58,7 @@ class GameFragment : Fragment() {
 
         // Setup a click listener for the Submit and Skip buttons.
         binding.submit.setOnClickListener { onSubmitWord() }
-        binding.skip.setOnClickListener {  }
+        binding.skip.setOnClickListener { onSkipWord() }
         // Update the UI
         updateNextWordOnScreen()
         binding.score.text = getString(R.string.score, 0)
@@ -129,6 +129,7 @@ class GameFragment : Fragment() {
      */
 
     private fun restartGame() {
+        viewModel.reinitializeData()
         setErrorTextField(false)
         updateNextWordOnScreen()
     }
@@ -146,7 +147,7 @@ class GameFragment : Fragment() {
     }
 
     /*
-    * Sets and resets the text field error status.
+    * 텍스트뷰 에러 창
     */
     private fun setErrorTextField(error: Boolean) {
         if (error) {
@@ -159,7 +160,7 @@ class GameFragment : Fragment() {
     }
 
     /*
-     * Displays the next scrambled word on screen.
+     * 다음 문제로
      */
     private fun updateNextWordOnScreen() {
         binding.textViewUnscrambledWord.text = viewModel.currentScrambledWord

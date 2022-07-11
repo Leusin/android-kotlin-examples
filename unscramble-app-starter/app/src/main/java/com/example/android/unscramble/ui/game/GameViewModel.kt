@@ -14,9 +14,24 @@ class GameViewModel : ViewModel() {
     val currentWordCount: Int get() =_currentWordCount
     val currentScrambledWord: String get() = _currentScrambledWord
 
+
+    // 앱에 사용될 영단어 List
     private var wordsList: MutableList<String> = mutableListOf()
     private lateinit var currentWord: String
 
+    init {
+        Log.d(TAG, "GameViewModel created!")
+        getNextWord()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        Log.d(TAG, "GameViewModel destroyed!")
+    }
+
+    /*
+    * Updates currentWord and currentScrambledWord with the next word.
+    */
     private fun getNextWord() {
         currentWord = allWordsList.random()
 
@@ -36,35 +51,6 @@ class GameViewModel : ViewModel() {
         }
     }
 
-    init {
-        Log.d(TAG, "GameViewModel created!")
-        getNextWord()
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        Log.d(TAG, "GameViewModel destroyed!")
-    }
-
-    fun nextWord(): Boolean {
-        return if (currentWordCount < MAX_NO_OF_WORDS) {
-            getNextWord()
-            true
-        } else false
-    }
-
-    private fun increaseScore() {
-        _score += SCORE_INCREASE
-    }
-
-    fun isUserWordCorrect(playerWord: String): Boolean {
-        if (playerWord.equals(currentWord, true)) {
-            increaseScore()
-            return true
-        }
-        return false
-    }
-
     /*
     * 게임 재시작 할 떄 앱 데이터 재설정
     */
@@ -74,4 +60,34 @@ class GameViewModel : ViewModel() {
         wordsList.clear()
         getNextWord()
     }
+
+    /*
+    * 정답 입력 시 score 가 오름
+    */
+    private fun increaseScore() {
+        _score += SCORE_INCREASE
+    }
+
+    /*
+    * 정답 입력시 true, score 이 오름
+    */
+    fun nextWord(): Boolean {
+        return if (currentWordCount < MAX_NO_OF_WORDS) {
+            getNextWord()
+            true
+        } else false
+    }
+
+    /*
+    * Returns true if the current word count is less than MAX_NO_OF_WORDS
+    */
+    fun isUserWordCorrect(playerWord: String): Boolean {
+        if (playerWord.equals(currentWord, true)) {
+            increaseScore()
+            return true
+        }
+        return false
+    }
+
+
 }
