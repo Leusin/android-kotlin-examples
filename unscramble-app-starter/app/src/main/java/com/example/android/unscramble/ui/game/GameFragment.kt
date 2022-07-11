@@ -17,6 +17,7 @@
 package com.example.android.unscramble.ui.game
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +37,8 @@ class GameFragment : Fragment() {
     private var currentWordCount = 0
     private var currentScrambledWord = "test"
 
+    private val TAG = "GameFragment"
+
     // Binding object instance with access to the views in the game_fragment.xml layout
     private lateinit var binding: GameFragmentBinding
 
@@ -49,6 +52,7 @@ class GameFragment : Fragment() {
     ): View {
         // Inflate the layout XML file and return a binding object instance
         binding = GameFragmentBinding.inflate(inflater, container, false)
+        Log.d(TAG, "GameFragment created/re-created!")
         return binding.root
     }
 
@@ -108,5 +112,10 @@ class GameFragment : Fragment() {
      */
     private fun updateNextWordOnScreen() {
         binding.textViewUnscrambledWord.text = viewModel.currentScrambledWord
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.d(TAG, "GameFragment destroyed!")
     }
 }
