@@ -11,7 +11,7 @@ class GameViewModel : ViewModel() {
     private lateinit var _currentScrambledWord: String
 
     val score: Int get() = _score
-    private val currentWordCount: Int get() =_currentWordCount
+    val currentWordCount: Int get() =_currentWordCount
     val currentScrambledWord: String get() = _currentScrambledWord
 
     private var wordsList: MutableList<String> = mutableListOf()
@@ -63,5 +63,15 @@ class GameViewModel : ViewModel() {
             return true
         }
         return false
+    }
+
+    /*
+    * 게임 재시작 할 떄 앱 데이터 재설정
+    */
+    fun reinitializeData() {
+        _score = 0
+        _currentWordCount = 0
+        wordsList.clear()
+        getNextWord()
     }
 }

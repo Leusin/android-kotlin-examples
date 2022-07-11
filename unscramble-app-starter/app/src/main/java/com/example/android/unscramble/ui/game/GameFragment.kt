@@ -48,6 +48,8 @@ class GameFragment : Fragment() {
         // Inflate the layout XML file and return a binding object instance
         binding = GameFragmentBinding.inflate(inflater, container, false)
         Log.d(TAG, "GameFragment created/re-created!")
+        Log.d(TAG, "Word: ${viewModel.currentScrambledWord} " +
+                "Score: ${viewModel.score} WordCount: ${viewModel.currentWordCount}")
         return binding.root
     }
 
@@ -123,9 +125,9 @@ class GameFragment : Fragment() {
     }
 
     /*
-     * Re-initializes the data in the ViewModel and updates the views with the new data, to
-     * restart the game.
+     * 뷰모델의 앱 데이터 초기화 and updates the views with the new data
      */
+
     private fun restartGame() {
         setErrorTextField(false)
         updateNextWordOnScreen()
