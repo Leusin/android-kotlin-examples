@@ -22,6 +22,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <!-- MainActivity에 GameFragment가 포함되어 있다-->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/game_fragment"
         android:name="com.example.android.unscramble.ui.game.GameFragment"
