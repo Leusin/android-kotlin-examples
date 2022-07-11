@@ -27,10 +27,8 @@ import com.example.android.unscramble.R
 import com.example.android.unscramble.databinding.GameFragmentBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-/**
- * Fragment where the game is played, contains the game logic.
- */
 class GameFragment : Fragment() {
+    private val TAG = "GameFragment"
 
     private val viewModel: GameViewModel by viewModels()
 
@@ -38,14 +36,10 @@ class GameFragment : Fragment() {
     private var currentWordCount = 0
     private var currentScrambledWord = "test"
 
-    private val TAG = "GameFragment"
-
-    // Binding object instance with access to the views in the game_fragment.xml layout
     private lateinit var binding: GameFragmentBinding
 
-    // Create a ViewModel the first time the fragment is created.
-    // If the fragment is re-created, it receives the same GameViewModel instance created by the
-    // first fragment
+    // 프래그먼트가 처음으로 생성될시 뷰모델 생성
+    // 프래그먼트가 재생성시 똑같은 뷰모델 생성
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -61,7 +55,7 @@ class GameFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Setup a click listener for the Submit and Skip buttons.
-        binding.submit.setOnClickListener {  }
+        binding.submit.setOnClickListener { onSubmitWord() }
         binding.skip.setOnClickListener {  }
         // Update the UI
         updateNextWordOnScreen()
@@ -70,18 +64,62 @@ class GameFragment : Fragment() {
                 R.string.word_count, 0, MAX_NO_OF_WORDS)
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        Log.d(TAG, "GameFragment destroyed!")
+    /*
+    * 유저가 입력한 변수를 확인하고 score 업데이트
+    * 다음 새로운 단어 제시
+    * 마지막 문제 후 유저에게 대화상자와 최종 score 보여줌
+    */
+    private fun onSubmitWord() {
+        val playerWord = binding.textInputEditText.text.toString()
+
+        if (viewModel.isUserWordCorrect(playerWord)) {
+            setErrorTextField(false)
+            if (viewModel.nextWord()) {
+                updateNextWordOnScreen()
+            } else {
+                showFinalScoreDialog()
+            }
+        } else {
+            setErrorTextField(true)
+        }
     }
 
     /*
-     * Gets a random word for the list of words and shuffles the letters in it.
+    * score 변동없이 현재 단어 Skip
+    */
+    private fun onSkipWord() {
+        if (viewModel.nextWord()) {
+            setErrorTextField(false)
+            updateNextWordOnScreen()
+        } else {
+            showFinalScoreDialog()
+        }
+    }
+
+    /*
+     * 목록에 있는 무작위 단어 선택한 후 문자열 섞음
      */
     private fun getNextScrambledWord(): String {
         val tempWord = allWordsList.random().toCharArray()
         tempWord.shuffle()
         return String(tempWord)
+    }
+
+    /*
+    * 대화상자가 나오면서 최종 score을 보여줌
+    */
+    private fun showFinalScoreDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(getString(R.string.congratulations))
+            .setMessage(getString(R.string.you_scored, viewModel.score))
+            .setCancelable(false)
+            .setNegativeButton(getString(R.string.exit)) { _, _ ->
+                exitGame()
+            }
+            .setPositiveButton(getString(R.string.play_again)) { _, _ ->
+                restartGame()
+            }
+            .show()
     }
 
     /*
@@ -98,6 +136,11 @@ class GameFragment : Fragment() {
      */
     private fun exitGame() {
         activity?.finish()
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.d(TAG, "GameFragment destroyed!")
     }
 
     /*
@@ -120,17 +163,4 @@ class GameFragment : Fragment() {
         binding.textViewUnscrambledWord.text = viewModel.currentScrambledWord
     }
 
-    private fun showFinalScoreDialog() {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(getString(R.string.congratulations))
-            .setMessage(getString(R.string.you_scored, viewModel.score))
-            .setCancelable(false)
-            .setNegativeButton(getString(R.string.exit)) { _, _ ->
-                exitGame()
-            }
-            .setPositiveButton(getString(R.string.play_again)) { _, _ ->
-                restartGame()
-            }
-        .show()
-    }
 }

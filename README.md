@@ -8,32 +8,30 @@
 
 ## words-app
 
-<br><br>
+
 ### Fragemnt Lifecycle
 > onCreate > onCreateView > onViewCreate > [ onStart > onPause > onStop ] > onDestroyView > onDestroy
 
-<br><br>
+
 ## unscramble-app
 
-<br><br>
 + `Fragment()` - `binding` 정의
 + `onCreateView()` - 결합 객체를 사용하여 레이아웃 XML 확장
 + `onViewCreated()` - 클릭리스너 설정, UI 업데이트
 
-<br><br>
+
 ### 앱 아키텍쳐
 
 [ __아키텍쳐 원칙__ ]
 + 관심사 분리: 각각 별개의 책임있는 여러 클래스로 앱을 나누어야 한다
 + 모델에서 UI, 만들기: (가급적이면 지속적인) 모델에서 UI를 만들어야 한다
 
-<br><br>
 [ __UI 컨트롤러__ ]
 + `Activity`와 `Fragment`는 UI 컨트롤러
 + UI 컨트롤레는 화면에 뷰를 그리고 사용자 이벤트나 사용자가 이벤트 응답과 동작 제어
 + 엡 데이터 또는 데이터에 관한 모든 의사 결정 로직은 UI 컨롤러 클래스에 포함되어서는 안 된다. (대신 `View Model` 추가) <br><br>
 
-<br><br>
+
 ### View Model 추가하기
 
 [ __View Model__ ]
@@ -57,7 +55,7 @@
 1. Activity 혹은 Fragment 클래스 상단에 `MyViewModel` 유형의 속성 추가
 2. `by ciewModels()` Kotilin 속성 위임을 사용하여 `MyViewModel` 초기화
 
-<br><br>
+
 ### ViewModel로 데이터 이동
 
 1. ViewModel 클래스 에서 지원속성을 추가한다
@@ -72,7 +70,7 @@
 + `ViewModel` 내에서는 데이터를 수정할 수 있어야 하므로 데이터는`pricate var` 이어야 한다
 + `ViewModel` 외부에서는 데이터를 읽을 수 있지만 수정할 수 없어야 하므로 'public val'로 노출햐야 한다
 
-<br><br>
+
 ### ViewModel의 수명주기
 Active나 Fragment의 범위가 유지되는 동안 `ViewModel`을 유지한다. `ViewModel`은 소유자가 화면 회전과 같은 구성 변경으로 인해 소멸되는 경우에도 소멸되지 않는다.
 
@@ -81,7 +79,6 @@ Active나 Fragment의 범위가 유지되는 동안 `ViewModel`을 유지한다.
 + Kotlin은 객체 인스턴스 초기화 중 필요한 초기 설정 코드를 배치하는 장소를 제공한다.
 + 이니셜라이저 블록에는 인스턴스가 처음 생성되어 초기화될 떄 실행된다.
 
-<br><br>
 ### ViewModel 채우기
 
 [ __지연 초기화__ ]
@@ -94,7 +91,6 @@ Active나 Fragment의 범위가 유지되는 동안 `ViewModel`을 유지한다.
 + `Array` 는 크기를 확장하거나 축소할 수 없ek
 + `List` 는 `add()` 함수와 `remove()` 함수가 있어 크기를 늘리고 줄일 수 있다.
 
-<br><br>
 ### Dialogs
 
 [ __Context__ ]
