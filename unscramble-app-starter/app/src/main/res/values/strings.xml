@@ -27,5 +27,4 @@
     <string name="exit">Exit</string>
     <string name="play_again">Play Again</string>
     <string name="try_again">Try again!</string>
-    <string name="example_resource">Last Name: %s</string>
 </resources>

@@ -138,11 +138,6 @@ class GameFragment : Fragment() {
         activity?.finish()
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        Log.d(TAG, "GameFragment destroyed!")
-    }
-
     /*
     * 텍스트뷰 에러 창
     */
