@@ -8,20 +8,13 @@ import androidx.lifecycle.ViewModel
 class GameViewModel : ViewModel() {
     private val TAG = "GameModel"
 
-//    private var _score = 0
     private val _score = MutableLiveData(0)
-//    private var _currentWordCount = 0
     private val _currentWordCount = MutableLiveData(0)
-//    private lateinit var _currentScrambledWord: String
     private val _currentScrambledWord = MutableLiveData<String>()
 
-//    val score: Int get() = _score
     val score: LiveData<Int> get() = _score
-//    val currentWordCount: Int get() =_currentWordCount
     val currentWordCount: LiveData<Int> get() = _currentWordCount
-//    val currentScrambledWord: String get() = _currentScrambledWord
     val currentScrambledWord: LiveData<String> get() = _currentScrambledWord
-
 
     // 앱에 사용될 영단어 List
     private var wordsList: MutableList<String> = mutableListOf()

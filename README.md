@@ -108,10 +108,8 @@ Active나 Fragment의 범위가 유지되는 동안 `ViewModel`을 유지한다.
 [ __텍스트 필드 오류 표시__ ]
 + 머티리얼 텍스필드에는 `TextInputLayout`에 요류 메시지를 표시하는 기능이 내장되어있다
 + 텍스트 필드에 오류를 표시하려면 코드에서 동적 또는 레이아웃 파일에서 정적 오류 표시하면 된다.
-> // Set error text <br>
 > passwordLayout.error = getString(R.string.error) <br>
-> // Clear error text <br>
-> passwordLayout.error = null  <br>
+> passwordLayout.error = null 
 
 + 시작 코드에는 `setErrorTextField(error: Boolean` 가 이미 정의 되어 있어 텍스트 필드에 오류를 설정할 수 있다
 + 오류 텍스트를 필드에 표시할지 예부에 따라 `true`나 `false`를 입력 매개변수로 사용하여 호출할 수 있다
@@ -225,9 +223,28 @@ plugins {
 __[ 12단계: 레이아웃 파일을 데이터 결합 레이아웃으로 변환하기 ]__ 
 + 루트 요소를 `<layout>` 태그로 래핑하고 네임스페이스 정의(`xml:`...)를 새 루트 요소로 이동한다. 
 + `<layout>` 태그 내부에 `<data></data>` 태그를 추가한다
-  + Android 스튜디오에서는 루트 요소를 마우스 오른쪽 버튼으로 클릭하고 Show Context Actions > Convert to data binding layout을 선택하면 자동으로 간편하게 추가할 수 있다
+  + Android 스튜디오에서는 루트 요소를 마우스 오른쪽 버튼으로 클릭하고
+  + Show Context Actions > Convert to data binding layout을 선택하면 자동으로 간편하게 추가할 수 있다
 + 시작부분에서 결합 데이터를 사용하도록 binding 변수의 인스턴스턴스화를 변경한다
-> binding = GameFragmentBinding.inflate(inflater, container, false)
+> binding = GameFragmentBinding.inflate(inflater, container, false) <br>
 대신
-> binding = DataBindingUtil.inflate(inflater, R.layout.game_fragment, container, false)
+> binding = DataBindingUtil.inflate(inflater, R.layout.game_fragment, container, false) <br>
 로 바꾼다
+
+
+## 데이터 결합 변수 추가
+
++ XML 파일의 `<data>` 태그 내 하위 태그 `<variable>` 를 추가하고 `ViewModel` 유형과 속성을 선언한다
+  + 이 속성을 사용하여 `ViewModel`의 데이터를 레이아웃에 결합할 수 있다
+> \<data\><br>
+> &nbsp;&nbsp;\<variable <br>
+> &nbsp;&nbsp;&nbsp;&nbsp;name="gameViewModel" <br>
+> &nbsp;&nbsp;&nbsp;&nbsp;type="com.example.android.unscramble.ui.game.GameViewModel" /\> <br>
+> \</data\>
+
++ UI 컨트롤러에서 레이아웃 변수 초기화
+> binding.gameViewModel = viewModel <br>
+> binding.maxNoOfWords = MAX_NO_OF_WORDS
+
++ 레이아웃에 수명 주기 소유자를 전달한다.
+> binding.lifecycleOwner = viewLifecycleOwner
