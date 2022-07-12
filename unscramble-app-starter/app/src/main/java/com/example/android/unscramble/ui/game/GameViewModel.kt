@@ -8,13 +8,17 @@ import androidx.lifecycle.ViewModel
 class GameViewModel : ViewModel() {
     private val TAG = "GameModel"
 
-    private var _score = 0
-    private var _currentWordCount = 0
+//    private var _score = 0
+    private val _score = MutableLiveData(0)
+//    private var _currentWordCount = 0
+    private val _currentWordCount = MutableLiveData(0)
 //    private lateinit var _currentScrambledWord: String
     private val _currentScrambledWord = MutableLiveData<String>()
 
-    val score: Int get() = _score
-    val currentWordCount: Int get() =_currentWordCount
+//    val score: Int get() = _score
+    val score: LiveData<Int> get() = _score
+//    val currentWordCount: Int get() =_currentWordCount
+    val currentWordCount: LiveData<Int> get() = _currentWordCount
 //    val currentScrambledWord: String get() = _currentScrambledWord
     val currentScrambledWord: LiveData<String> get() = _currentScrambledWord
 
@@ -49,9 +53,8 @@ class GameViewModel : ViewModel() {
         if (wordsList.contains(currentWord)) {
             getNextWord()
         } else {
-//            _currentScrambledWord = String(tempWord)
             _currentScrambledWord.value = String(tempWord)
-            ++_currentWordCount
+            _currentWordCount.value = (_currentWordCount.value)?.inc()
             wordsList.add(currentWord)
         }
     }
@@ -60,8 +63,8 @@ class GameViewModel : ViewModel() {
     * 게임 재시작 할 떄 앱 데이터 재설정
     */
     fun reinitializeData() {
-        _score = 0
-        _currentWordCount = 0
+        _score.value = 0
+        _currentWordCount.value = 0
         wordsList.clear()
         getNextWord()
     }
@@ -70,14 +73,14 @@ class GameViewModel : ViewModel() {
     * 정답 입력 시 score 가 오름
     */
     private fun increaseScore() {
-        _score += SCORE_INCREASE
+        _score.value = (_score.value)?.plus(SCORE_INCREASE)
     }
 
     /*
     * 정답 입력시 true, score 이 오름
     */
     fun nextWord(): Boolean {
-        return if (currentWordCount < MAX_NO_OF_WORDS) {
+        return if (currentWordCount.value!! < MAX_NO_OF_WORDS) {
             getNextWord()
             true
         } else false

@@ -136,3 +136,36 @@ Active나 Fragment의 범위가 유지되는 동안 `ViewModel`을 유지한다.
 __[ MutableLiveData ]__
 + 변경 가능한 버전의 `LiveData` 이다.
 + 내부에 저장된 데이터의 값을 변경할 수 있다.
+
+## LiveData 로 데이터 래핑하기
+
+__[ 1단계: LiveData로 점수 및 단어 래핑 ]__
++ `LiveData` 및 `MutableLiveData` 객체의 값은 동일하게 유지되고 이 객체에 지정된 데이터만 변경되기 때문에 클래스 변수의 속성을 `val` 로 한다
++ 변수의 데이터 유형을 `MutableLiveData` 로, 지원 필드 유형을 LiveData<[property]>로 변경한다
+  + private 필드는 _백업 저장소_ 또는 _지원 필드_라고 한다.
+> private val _score = __MutableLiveData(0)__<br>
+> val score: __LiveData<Int>__<br>
+> &nbsp;&nbsp;get() = _score<br><br>
+> private val _count = __MutableLiveData(0)__<br>
+> val count: __LiveData<Int>__<br>
+> &nbsp;&nbsp;get() = _count
+
++ `LiveData` 객체 내의 데이터에 액세스 하려면 `value` 속성을 사용한다
+> _score.__value__ = 0
+  + `LifecycleOwner` 에서도 `value` 속성을 사용하여 `score` 의 값에 엑세스할 수 있도록 한다
+> viewModel.score.value
+
++ 예제의 `_score` 은 더 이상 정수가 아닌 `LiveData` 이기 떄문에 Kotlin 함수 plus()를 사용하여 `_score` 값을 늘릴 수 있다
+> _score.value = (_score.value)?.plus(SCORE_INCREASE)
+
++ Kotlin함수`inc()` 를 사용하여 null 에 안전하게 값을 1씩 증분할 수 있다.
+> _count.value = (_currentWordCount.value)?.inc()
+
+__[ 2단계: 관찰자 연결하기 ]__
++ Fragment의 경우 `onViewCreated()` 메서드에서 `LiveData`의 관찰자를 연결한다
++ `viewLifecycleOwner` 를 첫 번째 매개변수로 `observe()` 매서드에 전달하고 두 번째 매개변수로 람다식 표현을 전달한다.
+  + 람다 표션식은 선언되지 않았지만 즉시 표현식으로 전될되는 익명삼수로 항상 중괄호 {} 로 묶는다
++ 이 매개변수를 사용하면 `LiveData` 가 `viewLifecycleOwner`의 수명주기를 인식하고 활성 상태(`STARTED`, `RESUMED`) 때 관찰자에게 알릴 수 있다.
+> viewModel.score.observe(viewLifecycleOwner,
+> &nbsp;&nbsp;{ newScore ->
+> })

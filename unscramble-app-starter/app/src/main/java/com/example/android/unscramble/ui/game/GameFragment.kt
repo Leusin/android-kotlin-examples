@@ -32,10 +32,6 @@ class GameFragment : Fragment() {
 
     private val viewModel: GameViewModel by viewModels()
 
-    private var score = 0
-    private var currentWordCount = 0
-    private var currentScrambledWord = "test"
-
     private lateinit var binding: GameFragmentBinding
 
     // 프래그먼트가 처음으로 생성될시 뷰모델 생성
@@ -59,16 +55,18 @@ class GameFragment : Fragment() {
         // Setup a click listener for the Submit and Skip buttons.
         binding.submit.setOnClickListener { onSubmitWord() }
         binding.skip.setOnClickListener { onSkipWord() }
-        // Update the UI
-//        updateNextWordOnScreen()
-        binding.score.text = getString(R.string.score, 0)
-        binding.wordCount.text = getString(
-                R.string.word_count, 0, MAX_NO_OF_WORDS)
+
         // Observe the scrambledCharArray LiveData, passing in the LifecycleOwner and the observer.
-        viewModel.currentScrambledWord.observe(viewLifecycleOwner,
-            { newWord ->
-                binding.textViewUnscrambledWord.text = newWord
-            })
+        viewModel.score.observe(viewLifecycleOwner) { newScore ->
+                binding.score.text = getString(R.string.score, newScore)
+            }
+        viewModel.currentWordCount.observe(viewLifecycleOwner) { newWordCount ->
+            binding.wordCount.text =
+                getString(R.string.word_count, newWordCount, MAX_NO_OF_WORDS)
+        }
+        viewModel.currentScrambledWord.observe(viewLifecycleOwner) { newWord ->
+            binding.textViewUnscrambledWord.text = newWord
+        }
     }
 
     /*
@@ -116,7 +114,7 @@ class GameFragment : Fragment() {
     private fun showFinalScoreDialog() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(getString(R.string.congratulations))
-            .setMessage(getString(R.string.you_scored, viewModel.score))
+            .setMessage(getString(R.string.you_scored, viewModel.score.value))
             .setCancelable(false)
             .setNegativeButton(getString(R.string.exit)) { _, _ ->
                 exitGame()
