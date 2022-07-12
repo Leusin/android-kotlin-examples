@@ -197,7 +197,7 @@ __[ 데이터 결합 사용 이점 ]__
 + 앱성능이 향상되며 메모리 누수 및 null 포인터 예외를 방지할 수 있다
 
 __[ 1단계: 뷰 결합을 데이터 결합으로 변경하기 ]__
-+ `build.gradle(Module)` 파일의 `buildFeatures` 섹션에서 `dataBinding` 속성을 사용 설정합니다.
++ `build.gradle(Module)` 파일의 `buildFeatures` 섹션에서 `dataBinding` 속성을 사용 설정한다.
 ```
 buildFeatures {
    viewBinding = true
@@ -220,7 +220,7 @@ plugins {
 }
 ```
 
-__[ 12단계: 레이아웃 파일을 데이터 결합 레이아웃으로 변환하기 ]__ 
+__[ 2단계: 레이아웃 파일을 데이터 결합 레이아웃으로 변환하기 ]__ 
 + 루트 요소를 `<layout>` 태그로 래핑하고 네임스페이스 정의(`xml:`...)를 새 루트 요소로 이동한다. 
 + `<layout>` 태그 내부에 `<data></data>` 태그를 추가한다
   + Android 스튜디오에서는 루트 요소를 마우스 오른쪽 버튼으로 클릭하고
