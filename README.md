@@ -164,8 +164,70 @@ __[ 1단계: LiveData로 점수 및 단어 래핑 ]__
 __[ 2단계: 관찰자 연결하기 ]__
 + Fragment의 경우 `onViewCreated()` 메서드에서 `LiveData`의 관찰자를 연결한다
 + `viewLifecycleOwner` 를 첫 번째 매개변수로 `observe()` 매서드에 전달하고 두 번째 매개변수로 람다식 표현을 전달한다.
-  + 람다 표션식은 선언되지 않았지만 즉시 표현식으로 전될되는 익명삼수로 항상 중괄호 {} 로 묶는다
+  + 람다 표현식은 선언되지 않았지만 즉시 표현식으로 전될되는 익명삼수로 항상 중괄호 {} 로 묶는다
 + 이 매개변수를 사용하면 `LiveData` 가 `viewLifecycleOwner`의 수명주기를 인식하고 활성 상태(`STARTED`, `RESUMED`) 때 관찰자에게 알릴 수 있다.
 > viewModel.score.observe(viewLifecycleOwner,
 > &nbsp;&nbsp;{ newScore ->
 > })
+
+## 데이터 결합과 함께 LiveData 사용하기
+
+__[ 뷰 결합 ]__
++ 뷰 결합은 코드에서 뷰에 더 쉽게 엑서스할 수 있는 기능으로, 각 XML 레이아웃 파일의 결합 클레스를 생성한다
++ 뷰를 코드에 바인딩 할 수 있지만 코드를 뷰에 바인딩 할 수 없는 단방향 결합이다
+  + 뷰 -> 코드 [o]
++ 뷰 결합을 사용하면 뷰(레이아웃 파일)에서 앱 데이터를 참조할 수 없다.
+  + 뷰 <- 코드 [x]
+  + 이 작업은 데이텨 결합을 사용하면 된다.
+>binding.textViewUnscrambledWord.text = newWord<br>
+> binding.score.text = getString(R.string.score, newScore)
+
+__[ 데이터 결합 ]__
++ 데이터 결합 라이브러리는 Android Jetpack 라이브러리의 일부이다.
++ 데이터 결합은 선언적 형식을 사용하며 레이아웃의 UI 구성요소를 앱의 데이터 소스에 바인딩 한다
+  + 코드에서 데이터를 뷰 + 뷰 결합에 결합(뷰를 코드에 결합)하는 것이다
+  + 뷰 <- 코드 [o]
+
++ UI 컨트롤러에서 예
+> binding.textViewUnscrambledWord.text = viewModel.currentScrambledWord
+
++ XML 파일에서 예
+> android:text="@{gameViewModel.currentScrambledWord}"
+
+__[ 데이터 결합 사용 이점 ]__
++Activity에서 많은 UI 프레임워크를 호출을 삭제할 수 있어 파일이 더욱 단순해지고 더손쉬운 유지관리가 가능해진다
++ 앱성능이 향상되며 메모리 누수 및 null 포인터 예외를 방지할 수 있다
+
+__[ 1단계: 뷰 결합을 데이터 결합으로 변경하기 ]__
++ `build.gradle(Module)` 파일의 `buildFeatures` 섹션에서 `dataBinding` 속성을 사용 설정합니다.
+```
+buildFeatures {
+   viewBinding = true
+}
+```
+대신
+```
+buildFeatures {
+   dataBinding = true
+}
+```
+로 바꾼다
+
++ 'build.gradle(Module)' 파일에서 `kotlin-kapt` 플러그인을 적용한다
+```
+plugins {
+   id 'com.android.application'
+   id 'kotlin-android'
+   id 'kotlin-kapt'
+}
+```
+
+__[ 12단계: 레이아웃 파일을 데이터 결합 레이아웃으로 변환하기 ]__ 
++ 루트 요소를 `<layout>` 태그로 래핑하고 네임스페이스 정의(`xml:`...)를 새 루트 요소로 이동한다. 
++ `<layout>` 태그 내부에 `<data></data>` 태그를 추가한다
+  + Android 스튜디오에서는 루트 요소를 마우스 오른쪽 버튼으로 클릭하고 Show Context Actions > Convert to data binding layout을 선택하면 자동으로 간편하게 추가할 수 있다
++ 시작부분에서 결합 데이터를 사용하도록 binding 변수의 인스턴스턴스화를 변경한다
+> binding = GameFragmentBinding.inflate(inflater, container, false)
+대신
+> binding = DataBindingUtil.inflate(inflater, R.layout.game_fragment, container, false)
+로 바꾼다
