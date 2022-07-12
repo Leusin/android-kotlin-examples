@@ -186,11 +186,11 @@ __[ 데이터 결합 ]__
   + 코드에서 데이터를 뷰 + 뷰 결합에 결합(뷰를 코드에 결합)하는 것이다
   + 뷰 <- 코드 [o]
 
-+ UI 컨트롤러에서 예
 > binding.textViewUnscrambledWord.text = viewModel.currentScrambledWord
+  + UI 컨트롤러에서
 
-+ XML 파일에서 예
 > android:text="@{gameViewModel.currentScrambledWord}"
+  + XML 파일에서
 
 __[ 데이터 결합 사용 이점 ]__
 +Activity에서 많은 UI 프레임워크를 호출을 삭제할 수 있어 파일이 더욱 단순해지고 더손쉬운 유지관리가 가능해진다
@@ -232,7 +232,7 @@ __[ 12단계: 레이아웃 파일을 데이터 결합 레이아웃으로 변환�
 로 바꾼다
 
 
-## 데이터 결합 변수 추가
+### 데이터 결합 변수 추가
 
 + XML 파일의 `<data>` 태그 내 하위 태그 `<variable>` 를 추가하고 `ViewModel` 유형과 속성을 선언한다
   + 이 속성을 사용하여 `ViewModel`의 데이터를 레이아웃에 결합할 수 있다
@@ -248,3 +248,27 @@ __[ 12단계: 레이아웃 파일을 데이터 결합 레이아웃으로 변환�
 
 + 레이아웃에 수명 주기 소유자를 전달한다.
 > binding.lifecycleOwner = viewLifecycleOwner
+
+
+### 결합 표현식 사용하기
++ 결합 표현식은 레이아웃 내에서 레이아웃 속성을 참조하는 속성에서 작성된다
++ 레이아웃 속성은 `<variable>` 태그를 통해 데이터 결합 레이아웃 파일의 상단에서 선언됩니다.
++  종속 변수 중 하나라도 변경되면 'DB 라이브러리'가 결합 표현식을 실행하고 이에 따라 뷰를 업데이트한다.
+
+__[ 결합 표현식의 구문 ]__
++ 결합 표현식은 `@` 기호로 시작하고 중괄호 `{}`로 래핑된다.
+> \<TextView android:layout_width="wrap_content" <br>
+> &nbsp;&nbsp;&nbsp;&nbsp;android:layout_height="wrap_content" <br>
+> &nbsp;&nbsp;&nbsp;&nbsp;android:text="@{user.firstName}" /\>
+
+> android:text="@{gameViewModel.currentScrambledWord}"
+  + 텍스트 뷰를 `ViewModel`의 `LiveData` 객체에 바인딩 한다
+  + 새 레이아웃 변수 gameViewModel을 사용하고 text 속성에 `@{gameViewModel.currentScrambledWord}` 를 할당한다.
+  + 결합 표현식을 사용하여 UI를 업데이트함
+
+> android:text="@{@string/example_resource(user.lastName)}" <br>
+_strings.xml_
+> \<string name="example_resource">Last Name: %s\</string\>
+  + example_resource는 %s 자리표시자가 있는 문자열 리소스이다
+  + user.lastName을 결합 표현식의 리소스 매개변수로 전달된다
+  + 여기서 user는 레이아웃 변수
