@@ -16,7 +16,7 @@ class GameViewModel : ViewModel() {
     val score: Int get() = _score
     val currentWordCount: Int get() =_currentWordCount
 //    val currentScrambledWord: String get() = _currentScrambledWord
-    val currentScrambleWord: LiveData<String> get() = _currentScrambledWord
+    val currentScrambledWord: LiveData<String> get() = _currentScrambledWord
 
 
     // 앱에 사용될 영단어 List
