@@ -1,6 +1,8 @@
 package com.example.android.unscramble.ui.game
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class GameViewModel : ViewModel() {
@@ -8,11 +10,13 @@ class GameViewModel : ViewModel() {
 
     private var _score = 0
     private var _currentWordCount = 0
-    private lateinit var _currentScrambledWord: String
+//    private lateinit var _currentScrambledWord: String
+    private val _currentScrambledWord = MutableLiveData<String>()
 
     val score: Int get() = _score
     val currentWordCount: Int get() =_currentWordCount
-    val currentScrambledWord: String get() = _currentScrambledWord
+//    val currentScrambledWord: String get() = _currentScrambledWord
+    val currentScrambleWord: LiveData<String> get() = _currentScrambledWord
 
 
     // 앱에 사용될 영단어 List
@@ -45,7 +49,8 @@ class GameViewModel : ViewModel() {
         if (wordsList.contains(currentWord)) {
             getNextWord()
         } else {
-            _currentScrambledWord = String(tempWord)
+//            _currentScrambledWord = String(tempWord)
+            _currentScrambledWord.value = String(tempWord)
             ++_currentWordCount
             wordsList.add(currentWord)
         }

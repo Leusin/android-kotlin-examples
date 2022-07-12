@@ -1,18 +1,18 @@
 # android-kotlin-examples
 
-+ __words-app__
++ [__1. words-app__](#1-words-app)
   + Fragment and the Navigation Component
-+ __unscramble-app__
++ [__2. unscramble-app__](#2-unscramble-app)
   + [Store data in ViewModel](https://developer.android.com/codelabs/basic-android-kotlin-training-viewmodel?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fandroid-basics-kotlin-unit-3-pathway-3%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fbasic-android-kotlin-training-viewmodel#0)
+  + [Use LiveData with ViewModel](https://developer.android.com/codelabs/basic-android-kotlin-training-livedata?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fandroid-basics-kotlin-unit-3-pathway-3%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fbasic-android-kotlin-training-livedata#0)
 
-
-## words-app
+##1. words-app
 
 ### Fragemnt Lifecycle
 > onCreate > onCreateView > onViewCreate > [ onStart > onPause > onStop ] > onDestroyView > onDestroy
 
 
-## unscramble-app
+##2. unscramble-app
 
 + `Fragment()` - `binding` 정의
 + `onCreateView()` - 결합 객체를 사용하여 레이아웃 XML 확장
@@ -124,3 +124,15 @@ Active나 Fragment의 범위가 유지되는 동안 `ViewModel`을 유지한다.
 > &nbsp;&nbsp;&nbsp;&nbsp;binding.textInputEditText.text = null
 > &nbsp;&nbsp;}
 > }
+
+
+### LiveData
+
++ 수명 주기를 인식하는 관측 가능한 홀더 클래스이다
++ `LiveData`에 관찰자(Observer)를 연결하면 관찰자는 `LifecycleOwner`(주로 Activity 나 Fragment)와 연결된다
++ 객체의 보유한 데이터가 관찰자에게 알림을 제공한다.
++ `Livedata`를 사용하면 앱 초기화 시 UI를 업데이트하기 위해 여러위치에 있는 메서드를 호출하지 않고 관찰자에서 한 번만 호출하면 된다.
+
+__[ MutableLiveData ]__
++ 변경 가능한 버전의 `LiveData` 이다.
++ 내부에 저장된 데이터의 값을 변경할 수 있다.
