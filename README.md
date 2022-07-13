@@ -324,3 +324,29 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
 + 각 프래그먼트 앱 바 제목을 설정한다.
 + `nav_graph.xml` 에서 각 프래그먼트 대상의 `android:label` 속성을 수정한다
+
+### 프래그먼트 간 공유되는 ViewModel
+
+__[ ViewModel 권장사항 ]__
++ `ViewModel` 에서 데이터를 `public` 로 노출하지 않는 것이 좋다
+  + 앱 데이터가 외부 클래스에 의해 예상치 못한 방식으로 수정 될 수 있다
++ 필요한 경우 각 속성의 변경 불가능한 `puplic` 버전을 노출한다
+  + 이름 지정 규칙은 변경 가능한 `private` 속성의 이름 앞에 및줄(`_`)을 붙이는 것이다
+
+__[ ViewModel 만들기 ]__
++ `ViewModel` 의 코드는 UI 코드(Fragment 및 Activity)와 구분되도록 `model` 패키지로 분리한다
++ 새로은 클래스를 생성하고 `ViewModel` 으로 확장한다
+> import androidx.lifecycle.ViewModel <br>
+> <br>
+> class OrderViewModel : ViewModel() { }
+
++ 속성을 `private``val` 로 추가하고 속성 유형을 `LiveData` 로 한 뒤 지원 필드를 속성에 추가한다.
+  + 이렇게 하면 속성을 관찰 할 수 있으며 `ViewModel` 의 소스 데이터가 변경될 때 UI를 업데이트할 수 있다
+> import androidx.lifecycle.LiveData <br>
+> import androidx.lifecycle.MutableLiveData <br>
+>... <br>
+> private val _quantity = MutableLiveData<Int>(0) <br>
+> val quantity: LiveData<Int> = _quantity
+
++ 매서드 내 변경 가능한 속성에 전달된 인수를 할당하는 setter 매서드는 `ViewModel`외부에 호출되도록 공개 상태 한정자로 둔다.
+> fun setQuantity(numberCupcakes: Int) { _quantity.value = numberCupcakes }
