@@ -29,4 +29,8 @@ class OrderViewModel : ViewModel() {
     fun setDate(pickupDate: String) {
         _date.value = pickupDate
     }
+    // 컵케이크의 맛이 설정 되었는지 여부 확인
+    fun hasNoFlavorSet(): Boolean {
+        return _flavor.value.isNullOrEmpty()
+    }
 }

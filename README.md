@@ -325,7 +325,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 + 각 프래그먼트 앱 바 제목을 설정한다.
 + `nav_graph.xml` 에서 각 프래그먼트 대상의 `android:label` 속성을 수정한다
 
-### 프래그먼트 간 공유되는 ViewModel
+### 공유 ViewModel 만들기
 
 __[ ViewModel 권장사항 ]__
 + `ViewModel` 에서 데이터를 `public` 로 노출하지 않는 것이 좋다
@@ -350,3 +350,26 @@ __[ ViewModel 만들기 ]__
 
 + 매서드 내 변경 가능한 속성에 전달된 인수를 할당하는 setter 매서드는 `ViewModel`외부에 호출되도록 공개 상태 한정자로 둔다.
 > fun setQuantity(numberCupcakes: Int) { _quantity.value = numberCupcakes }
+
+
+### ViewModel 을 사용하여 UI 업데이트
++ 공유 뷰 모델 구현의 주요 차이점은 UI 컨트롤러에서 뷰 모델에 액세스
+  + Fragment 인스턴스 대신 Activity 인스턴스를 사용
++ `viewModels()`는 현재 Fragment 범위가 지정된 `ViewModel` 인스턴스를 제공한다. 
+  + 따라서 인스턴스는 Fragment 마다 다르다.
++ `activityViewModels()`는 Activity 로 범위가 지정된 `ViewModel` 인스턴스를 제공한다.
+  + 따라서 인스턴스는 동일한 활동의 여러 프래그먼트 간에 동일하게 유지됩니다.
+
+__[ Kotlin 속성 위임 ]__
++ Kotlin 에서 `var` 속성에 자동으로 생성되는 기본 getter 및 setter 함수가 있다.
+  + 값을 할당하거나 속성의 값을 읽을 떄 setter 및 getter 함수가 호출된다. 
+  + 읽기 전용 `val` 의 경우 기본적으로 getter 함수만 생성된다.
++ Kotlin 에서 속성 위임을 사용하면 getter-setter 책임을 다른 클래스에 넘길수 있다
++ 이 클래스를 _대리자 클래스_라고 부르며 속성의 getter 및 setter 함수를 제공하고 변경사항을 대신 처리한다
++ 대리자 속성은 `by` 절 및 대리자 클래스의 인스턴스를 사용하여 정의된다.
+```
+import androidx.fragment.app.activityViewModels
+import com.example.cupcake.model.OrderViewModel
+...
+var <property-name> : <property-type> by <delegate-class>()
+```
