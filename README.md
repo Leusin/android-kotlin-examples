@@ -287,3 +287,40 @@ _strings.xml_
 
 
 ## 3. cupcake-app
+ 
+###탐색 그래프
++ Jetpack Navigation 라이브러리 포함
++ Activity 에 `NavHost` 추가
++ 탐색 그래프 만들기
++ 탐색 그래프에 프래그먼트 대상 추가
++ 탐색 그래프에서 대상 연결
+
+__[ Fragment 로 이동 ]__
++ `findNavController()` 메서드를 사용하여 `NavController` 를 가져오고 거기에서 `navigate()` 를 호출하여 작업 ID `R.idaction_`+[현재 Fragment] + `_to_` + [이동할 Fragment] 를 전달한다
+> findNavController().navigate(R.id.action_startFragment_to_flavorFragment)
++ `import` `androidx.navigation.fragment.findNavController` 가져오기를 추가한다
+
+__[ 앱 바에 제목 업데이트 ]__
++ `MainActivity.kt` 에서 `onCreate()` 메서드를 재정의하여 탐색 컨트롤러를 설정한다 
+  + `NavHostFragment` 에서 `NavController` 의 인스턴스를 가져옵니다
++ `setupActionBarWithNavController(navController)` 를 호출하여 `NavController`의 인스턴스를 전달
+  + 이렇게 하면 대상의 라벨을 기반으로 앱 바에 제목이 표시되고 최상위 대상에 있지 않은 경우 항상 위로 버튼이 표시된다
+```
+import androidx.navigation.ui.setupActionBarWithNavController
+
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val navHostFragment = supportFragmentManager
+                .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+
+        setupActionBarWithNavController(navController)
+    }
+}
+```
+
++ 각 프래그먼트 앱 바 제목을 설정한다.
++ `nav_graph.xml` 에서 각 프래그먼트 대상의 `android:label` 속성을 수정한다
