@@ -5,6 +5,8 @@
 + [__2. unscramble-app__](#2-unscramble-app)
   + [Store data in ViewModel](https://developer.android.com/codelabs/basic-android-kotlin-training-viewmodel?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fandroid-basics-kotlin-unit-3-pathway-3%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fbasic-android-kotlin-training-viewmodel#0)
   + [Use LiveData with ViewModel](https://developer.android.com/codelabs/basic-android-kotlin-training-livedata?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fandroid-basics-kotlin-unit-3-pathway-3%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fbasic-android-kotlin-training-livedata#0)
++ [__3. cupcake-app__](#3-cupcake-app)
+  + [Shared ViewModel Across Fragments](https://developer.android.com/codelabs/basic-android-kotlin-training-shared-viewmodel?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fandroid-basics-kotlin-unit-3-pathway-4%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fbasic-android-kotlin-training-shared-viewmodel#0)
 
 ## 1. words-app
 
@@ -262,13 +264,26 @@ __[ 결합 표현식의 구문 ]__
 > &nbsp;&nbsp;&nbsp;&nbsp;android:text="@{user.firstName}" /\>
 
 > android:text="@{gameViewModel.currentScrambledWord}"
-  + 텍스트 뷰를 `ViewModel`의 `LiveData` 객체에 바인딩 한다
-  + 새 레이아웃 변수 gameViewModel을 사용하고 text 속성에 `@{gameViewModel.currentScrambledWord}` 를 할당한다.
-  + 결합 표현식을 사용하여 UI를 업데이트함
++ 텍스트 뷰를 `ViewModel`의 `LiveData` 객체에 바인딩 한다
++ 새 레이아웃 변수 gameViewModel을 사용하고 text 속성에 `@{gameViewModel.currentScrambledWord}` 를 할당한다.
++ 결합 표현식을 사용하여 UI를 업데이트함
 
 > android:text="@{@string/example_resource(user.lastName)}" <br>
 _strings.xml_
 > \<string name="example_resource">Last Name: %s\</string\>
-  + example_resource는 %s 자리표시자가 있는 문자열 리소스이다
-  + user.lastName을 결합 표현식의 리소스 매개변수로 전달된다
-  + 여기서 user는 레이아웃 변수
++ example_resource는 %s 자리표시자가 있는 문자열 리소스이다
++ user.lastName을 결합 표현식의 리소스 매개변수로 전달된다
++ 여기서 user는 레이아웃 변수
+
+### 요약
++ LiveData는 데이터를 보유하며 모든 데이터에 사용할 수 있는 래퍼이다
++ LiveData는 관찰 가능하다
+  + LiveData 객체에서 보유한 데이터가 변경되면 관찰자에 알림이 제공된다.
++ LiveData는 수명 주기를 인식한다
+  + LiveData에 관찰자를 연결하면 관찰자는 LifecycleOwner(Activity 나 Fragment)와 연결된다
+  + LiveData는 활성 수명 주기 상태(STARTED 또는 RESUME)인 관찰자만 업데이트한다
++ 앱은 데이터 결합 및 결합 표현식을 사용하여 레이아웃에서 LiveData 변경사항을 수신할 수 있다.
++ 결합 표현식은 레이아웃 내에서 레이아웃 속성을 참조하는 속성(attribute properties)(예: android:text)에서 작성된다.
+
+
+## 3. cupcake-app
