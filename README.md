@@ -409,3 +409,11 @@ __[ 리스너 결합 ]__
 + 리스너 결합은 onClick 이벤트와 같은 이벤트가 발생할 때 실행되는 람다 표현식이다
 + 리스너 결합을 사용하면 임의의 데이터 결합 표현식을 실행할 수 있다.
   + `textview.setOnClickListener(clickListener)와 같은 메서드 참조와 비슷하다
+
+__[ 날짜 형식 지정 ]__
++ Android 프레임워크는 `SimpleDateFormat` 클래스는 날짜 형식을 지정하고 파싱하는 클래스
+  + 날짜의 형식 지정(날짜 → 텍스트) 및 파싱(텍스트 → 날짜)이 가능
+> SimpleDateFormat("E MMM d", Locale.getDefault())
++ `"E MMM d"`와 같은 패턴 문자열은 날짜 및 시간 형식의 표현
++ `Locale` 객체는 특정한 지리적, 정치적 또는 문화적 지역을 나타냄
++ `Locale.getDefault()` 메서드를 사용하여 사용자의 기기에 설정된 언어 정보를 가져와서 `SimpleDateFormat` 생성자에 전달
