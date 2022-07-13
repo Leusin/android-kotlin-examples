@@ -373,3 +373,39 @@ import com.example.cupcake.model.OrderViewModel
 ...
 var <property-name> : <property-type> by <delegate-class>()
 ```
+
+
+### 데이터 결합과 함께 ViewModel 사용
+
+__[ 데이터 결합 ]__
++ 데이터 결합 라이브러리는 Android Jetpack의 구성요소이다
++ 데이터 결합은 선언적 형식을 사용하여 레이아웃의 UI 구성요소를 앱의 데이터 소스에 결합하는 것이다
+  + 코드에서 데이터를 뷰 + 뷰 결합에 결합하는 것
++ 이러한 결합을 설정하고 업데이트를 자동으로 설정하면 코드에서 UI를 직접 업데이트하는 것을 잊은 경우 오류 발생 가능성을 줄인다.
+> \<data\> <br>
+> &nbsp;&nbsp;<variable <br>
+> &nbsp;&nbsp;name="viewModel" <br>
+> &nbsp;&nbsp;type="com.example.cupcake.model.OrderViewModel" /> <br>
+> </data>
+
+ __[ 범위 함수 적용 ]__
++ `apply` 는 Kotlin 표준 라이브러리의 범위 함수 이다
++ 객체의 컨텐스트 내에서 코드 블록을 실행하며, 임시 범위를 형성한다.
+  + 그러면 이 범위에서 이름을 사용하지 않고 객체에 엑세스할 수 있다
++ `apply` 의 일반적인 사례는 객체를 구성하는 것이다
+> clark.apply { <br>
+> &nbsp;&nbsp;firstName = "Clark" <br>
+> &nbsp;&nbsp;lastName = "James" <br>
+> &nbsp;&nbsp;age = 18 <br>
+>  } <br>
+> <br>
+> // The equivalent code without apply scope function would look like the following. <br>
+> <br>
+> clark.firstName = "Clark" <br>
+> clark.lastName = "James" <br>
+> clark.age = 18
+
+__[ 리스너 결합 ]__
++ 리스너 결합은 onClick 이벤트와 같은 이벤트가 발생할 때 실행되는 람다 표현식이다
++ 리스너 결합을 사용하면 임의의 데이터 결합 표현식을 실행할 수 있다.
+  + `textview.setOnClickListener(clickListener)와 같은 메서드 참조와 비슷하다
