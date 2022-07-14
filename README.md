@@ -7,7 +7,7 @@
   + [Use LiveData with ViewModel](https://developer.android.com/codelabs/basic-android-kotlin-training-livedata?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fandroid-basics-kotlin-unit-3-pathway-3%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fbasic-android-kotlin-training-livedata#0)
 + [__3. cupcake-app__](#3-cupcake-app)
   + [Shared ViewModel Across Fragments](https://developer.android.com/codelabs/basic-android-kotlin-training-shared-viewmodel?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fandroid-basics-kotlin-unit-3-pathway-4%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fbasic-android-kotlin-training-shared-viewmodel#0)
-
+  + [Navigation and the back stack](https://developer.android.com/codelabs/basic-android-kotlin-training-navigation-backstack?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fandroid-basics-kotlin-unit-3-pathway-4%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fbasic-android-kotlin-training-navigation-backstack#0)
 ## 1. words-app
 
 ### Fragemnt Lifecycle
@@ -417,3 +417,40 @@ __[ 날짜 형식 지정 ]__
 + `"E MMM d"`와 같은 패턴 문자열은 날짜 및 시간 형식의 표현
 + `Locale` 객체는 특정한 지리적, 정치적 또는 문화적 지역을 나타냄
 + `Locale.getDefault()` 메서드를 사용하여 사용자의 기기에 설정된 언어 정보를 가져와서 `SimpleDateFormat` 생성자에 전달
+
+### 요약
++ `ViewModel` 은 Android 아키텍처 구성요소의 일부, `ViewModel` 내에 저장된 앱 데이터는 구성 변경 중에도 유지
+  + 앱에 `ViewModel` 을 추가하려면 새 클래스를 만들어 `ViewModel` 클래스에서 확장
++ 공유 `ViewModel` 은 여러 프래그먼트의 앱 데이터를 단일 `ViewModel` 에 저장하는 데 사용
+  + 앱의 여러 프래그먼트는 활동 범위를 사용하여 공유 `ViewModel` 에 액세스합니다.
++ `LifecycleOwner` 는 활동이나 프래그먼트와 같이 Android 수명 주기를 보유한 클래스
++ `LiveData` 관찰자는 수명 주기 소유자가 활성 상태(`STARTED` 또는 `RESUMED`)인 경우에만 앱 데이터의 변경사항을 관찰
++ 리스너 결합은 `onClick` 이벤트와 같은 이벤트가 발생할 때 실행되는 람다 표현식
+  + 리스너 결합을 사용하면 임의의 데이터 결합 표현식을 실행할 수 있음
++ LiveData 변환 메서드는 LiveData 소스에서 데이터 조작을 실행하고 결과 LiveData 객체를 반환하는 방법을 제공합니다.
+  Android 프레임워크는 언어에 민감한 방식으로 날짜 형식을 지정하고 파싱하는 클래스인 `SimpleDateFormat` 이라는 클래스를 제공
+  + 이 클래스를 통해 날짜의 형식 지정(날짜 → 텍스트) 및 파싱(텍스트 → 날짜)
+
+
+__[ Up 버튼 동작 구현 ]__
+```
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
+
+    private lateinit var navController: NavController
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val navHostFragment = supportFragmentManager
+                .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
+
+        setupActionBarWithNavController(navController)
+    }
+    
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+}
+
+```
