@@ -432,7 +432,7 @@ __[ 날짜 형식 지정 ]__
   + 이 클래스를 통해 날짜의 형식 지정(날짜 → 텍스트) 및 파싱(텍스트 → 날짜)
 
 
-__[ Up 버튼 동작 구현 ]__
+### Up 버튼 동작 구현 
 ```
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
@@ -452,5 +452,46 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }
+```
+
+
+### 작업 및 백스택
+
+__[ 작업 ]__
++ 사용자가 이메일 확인, 컵케이크 주문 생성, 사진 촬영 등의 특정한 일을 할 때 상호작용하는 활동의 모음
++ 활동은 _백 스택_ 이라는 스택으로 배열되며, 사용자가 방문하는 각각의 새 활동은 작업의 백 스택으로 푸시
+  + 맨 위 스택 활동은 현재 사용자가 상호작용하고 있는 활동, 그 아래 스택은 백스라운드로 전환되었다가 중지된 활동
++ 사용자가 여러 번 뒤로 이동하고 싶어하는 경우 Android는 맨 마지막 스택에 가까워질 때까지 계속 상단의 활동을 없앰
+  + 백 스택에 더 이상 활동이 남아 있지 않으면 사용자는 기기의 런처 화면이나 이 활동을 실행한 앱으로 돌아감 
+
+__[ Cancel 버튼 추가 ]__
+```xml
+<Button
+                    android:id="@+id/cancel_button"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:text="@string/cancel" />
+```
+
+__[ Cancel 리스너 추가 ]__
+```kotlin
+fun cancelOrder() {
+    sharedViewModel.resetOrder()
+    findNavController().navigate(R.id.action_flavorFragment_to_startFragment)
+}
+```
+```xml
+<Button
+    android:id="@+id/cancel_button"
+    android:onClick="@{() -> flavorFragment.cancelOrder()}" ... />
+```
+
+__[ 백 스택에서 추가 대상 없애기 ]__
++ 탐색 그래프의 탐색 작업에 `app:popUpTo` 속성을 포함하면 지정된 대상에 도달할 때까지 대상 두 개 이상이 백 스택에서 없어질 수 있다
+```xml
+<action
+        android:id="@+id/action_flavorFragment_to_startFragment"
+        app:destination="@id/startFragment"
+        app:popUpTo="@id/startFragment"
+        app:popUpToInclusive="true" />
 
 ```
