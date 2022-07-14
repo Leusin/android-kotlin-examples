@@ -495,3 +495,28 @@ __[ 백 스택에서 추가 대상 없애기 ]__
         app:popUpToInclusive="true" />
 
 ```
+
+
+### 주문 전송
+
+__[ 이메일 전송 ]__
++ 인텐트 작업에 `Intent.ACTION_SEND`를 지정
++ 유형을 `"text/plain"`으로 설정하 
++ 이메일 제목(`Intent.EXTRA_SUBJECT`)과 이메일 본문(`Intent.EXTRA_TEXT`)을 위한 인텐트 추가항목을 포함
++ 필요한 경우 `android.content.Intent` 를 가져온다
+```kotlin
+val intent = Intent(Intent.ACTION_SEND)
+    .setType("text/plain")
+    .putExtra(Intent.EXTRA_SUBJECT, getString(R.string.new_cupcake_order))
+    .putExtra(Intent.EXTRA_TEXT, orderSummary)
+```
+
+__[ string.xml 파일에 복수형 리소스 추가 ]__
+```xml
+<string name="order_details">Quantity: %1$s \n Flavor: %2$s \nPickup date: %3$s \n
+  Total: %4$s \n\n Thank you!</string>
+<plurals name="cupcakes">
+    <item quantity="one">%d cupcake</item>
+    <item quantity="other">%d cupcakes</item>
+</plurals>
+```
