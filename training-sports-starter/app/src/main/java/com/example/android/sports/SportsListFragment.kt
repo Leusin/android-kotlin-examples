@@ -51,7 +51,7 @@ class SportsListFragment : Fragment() {
             sportsViewModel.updateCurrentSport(it)
             // Navigate to the details screen
             val action = SportsListFragmentDirections.actionSportsListFragmentToNewsFragment()
-            this.findNavController().navigate(action)
+            binding.slidingPaneLayout.openPane()
         }
         binding.recyclerView.adapter = adapter
         adapter.submitList(sportsViewModel.sportsData)
