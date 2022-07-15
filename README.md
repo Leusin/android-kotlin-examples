@@ -10,6 +10,7 @@
   + [Navigation and the back stack](https://developer.android.com/codelabs/basic-android-kotlin-training-navigation-backstack?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fandroid-basics-kotlin-unit-3-pathway-4%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fbasic-android-kotlin-training-navigation-backstack#0)
 + [__4. training-sports__](#4-training-sports)
   + [Adaptive Layouts](https://developer.android.com/codelabs/basic-android-kotlin-training-adaptive-layouts?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fandroid-basics-kotlin-unit-3-pathway-5%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fbasic-android-kotlin-training-adaptive-layouts#0)
++ [__5. lunch-try-app__](#5-lunch-try-app)
 
 ## 1. words-app
 
@@ -536,4 +537,7 @@ var instantTaskExecutorRule = InstantTaskExecutorRule()
 ## 4. training-sports
 
 ### SlidingPaneLayout 패턴
-+ 대형 기기에서는 창 두 개를 나란히 표시하고, 소형 기기에서는 창을 한 번에 한 개만 ㅍ시하도록 자동 조절
++ 대형 기기에서는 창 두 개를 나란히 표시하고, 소형 기기에서는 창을 한 번에 한 개만 표시하도록 자동 조절
+
+
+## 5. lunch-tray-app
