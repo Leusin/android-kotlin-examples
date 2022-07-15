@@ -73,6 +73,8 @@ class SportsListFragment : Fragment() {
         val binding = FragmentSportsListBinding.bind(view)
         val slidingPaneLayout = binding.slidingPaneLayout
 
+        slidingPaneLayout.lockMode = SlidingPaneLayout.LOCK_MODE_LOCKED
+
         // Initialize the adapter and set it to the RecyclerView.
         val adapter = SportsAdapter {
             // Update the user selected sport as the current sport in the shared viewmodel
@@ -88,7 +90,7 @@ class SportsListFragment : Fragment() {
             viewLifecycleOwner,
             SportsListOnBackPressedCallback(slidingPaneLayout)
         )
-        
+
         binding.recyclerView.adapter = adapter
         adapter.submitList(sportsViewModel.sportsData)
     }
