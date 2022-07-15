@@ -8,6 +8,9 @@
 + [__3. cupcake-app__](#3-cupcake-app)
   + [Shared ViewModel Across Fragments](https://developer.android.com/codelabs/basic-android-kotlin-training-shared-viewmodel?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fandroid-basics-kotlin-unit-3-pathway-4%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fbasic-android-kotlin-training-shared-viewmodel#0)
   + [Navigation and the back stack](https://developer.android.com/codelabs/basic-android-kotlin-training-navigation-backstack?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fandroid-basics-kotlin-unit-3-pathway-4%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fbasic-android-kotlin-training-navigation-backstack#0)
++ [__4. training-sports__](#4-training-sports)
+  + [Adaptive Layouts](https://developer.android.com/codelabs/basic-android-kotlin-training-adaptive-layouts?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fandroid-basics-kotlin-unit-3-pathway-5%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fbasic-android-kotlin-training-adaptive-layouts#0)
+
 ## 1. words-app
 
 ### Fragemnt Lifecycle
@@ -520,3 +523,17 @@ __[ string.xml 파일에 복수형 리소스 추가 ]__
     <item quantity="other">%d cupcakes</item>
 </plurals>
 ```
+### Test ViewModel and LiveData
+
++ `LiveData` 객체가 기본 스레드를 호출하지 않도록 `LiveData` 객체를 테스트할 때마다 특정 테스트 규칙을 제공
+```kotlin
+@get:Rule
+var instantTaskExecutorRule = InstantTaskExecutorRule()
+
+```
+
+
+## 4. training-sports
+
+### SlidingPaneLayout 패턴
++ 대형 기기에서는 창 두 개를 나란히 표시하고, 소형 기기에서는 창을 한 번에 한 개만 ㅍ시하도록 자동 조절
