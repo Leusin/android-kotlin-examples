@@ -11,8 +11,8 @@
 + [__4. training-sports__](#4-training-sports)
   + [Adaptive Layouts](https://developer.android.com/codelabs/basic-android-kotlin-training-adaptive-layouts?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fandroid-basics-kotlin-unit-3-pathway-5%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fbasic-android-kotlin-training-adaptive-layouts#0)
 + [__5. lunch-try-app__](#5-lunch-try-app)
-+ [__6. login-master__](#6-login-master)
-  + [Advanced Android in Kotlin 06.1:Android Login with FirebaseUI](https://developer.android.com/codelabs/advanced-android-kotlin-training-login#0)
++ [__6. mars-photos-app__](#6-mars-photos-app)
+  + [Get data from the internet](https://developer.android.com/codelabs/basic-android-kotlin-training-getting-data-internet?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fandroid-basics-kotlin-unit-4-pathway-2%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fbasic-android-kotlin-training-getting-data-internet#0)
 
 ## 1. words-app
 
@@ -653,54 +653,55 @@ println(intList)
 + filterNotNull 메소드를 이용하여 null 객체를 미리 제거
 
 
-## 6. login-master
+## 6. mars-photos-app
 
-### 파이어베이스 프로젝트 추가하기
-1. 파이어베이스 프로젝트 만들기
-+ [파이어베이스 콘솔](https://console.firebase.google.com/?pli=1)에 들어가 _프로젝트 추가_ 클릭 
-+ 프로잭트 이름 정하고 계속하기 버튼 클릭
+### 웹 서비스 및 Restfit
 
-2. 파이어베이스에 앱 정보 등록하기
-+ 프로젝트 개요 헤이지에서 _앱 추가_ 클릭 후 안드로이드 아이콘 선택
-+ _안드로이드 페키지 이름_으로 앱 ID 입력한다
-+ 디버그 서명 인증서 `SHA-1` 를 찾아 입력
-  + 우측 상단 `Gradle` > Tasks > android > signingReport
+__[ REST ]__
++ REpresentational State Transfer의 약자
++ 일반적인 스테이트리스(Stateless) 웹 아키텍처를 사용해 웹 서비스를 실행
+  + 이 아키텍처를 제공하는 웹 서비스를 _RESTful_
 
-3. 구성 파일 추가
-+ 프로젝트 > 프로젝트 설정 > 내앱 `google-services.json` 다운로드
-+ 프로젝트 단위 파일 페이지에서 `app` 폴더에 `google-services.json` 저장
++ 표준화된 방법으로 URI를 통해 RESTful 웹 서비스에 요청이 전송됩니다.
++ URI(Uniform Resource Identifier)는 리소스 위치나 리소스에 액세스하는 방법을 암시하지 않고 서버의 리소스를 이름으로 식별
 
-4. 파이어베이스 라이브러리 추가
-+ build.gradle
+__[ 웹 서비스 요청 ]__
++ 웹 서비스 요청은 URI를 포함
+  + 웹 브라우저에서 사용하는 것과 동일한 HTTP 프로토콜을 사용
+
++ 일반적인 HTTP 작업
+  + 서버 데이터를 검색하는 GET
+  + 서버에 새로운 데이터를 추가/생성/업데이트하는 POST 또는 PUT
+  + 서버에서 데이터를 삭제하는 DELETE
+
++ 웹 서비스의 응답은 일반적으로 키-값 쌍으로 구조화된 데이터를 나타내는 XML 또는 JSON 등의 일반적인 웹 형식
+
+__[ Retrofit 종속 항목 추가 ]__
+
+1. build.gradle(Project: MarsPhotos)
 ```kotlin
 repositories {
-    // Check that you have the following line (if not, add it):
-    google()  // Google's Maven repository
-  }
-
-  dependencies {
-    // ...
-
-    // Add the following line:
-    classpath 'com.google.gms:google-services:4.3.0'  // Google Services plugin
-  }
-}
-
-allprojects {
-  // ...
-
-  repositories {
-    // Check that you have the following line (if not, add it):
-    google()  // Google's Maven repository
-    // ...
-  }
+        google()
+        mavenCentral()
+    }
 ```
-+ app/build.gradle
+
+2. build.gradle (Module: MarsPhots.app)
 ```kotlin
-dependencies {
+android {
   ...
-  
-  implementation 'com.firebaseui:firebase-ui-auth:5.0.0'
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  kotlinOptions {
+    jvmTarget = '1.8'
+  }
 }
-apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin
+dependencies{
+  implementation "com.squareup.retrofit2:retrofit:2.9.0"
+  implementation "com.squareup.retrofit2:converter-scalars:2.9.0"
+}
 ```
