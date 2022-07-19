@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,75 +15,92 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import com.example.lunchtray.R;
 import com.example.lunchtray.model.OrderViewModel;
-import com.example.lunchtray.ui.order.CheckoutFragment;
+import com.example.lunchtray.ui.order.EntreeMenuFragment;
 import java.lang.Deprecated;
 import java.lang.Object;
 
 public abstract class FragmentEntreeMenuBinding extends ViewDataBinding {
   @NonNull
-  public final TextView accompanimentPrice;
-
-  @NonNull
-  public final TextView accompanimentSelection;
-
-  @NonNull
   public final Button cancelButton;
+
+  @NonNull
+  public final RadioButton cauliflower;
+
+  @NonNull
+  public final TextView cauliflowerDescription;
+
+  @NonNull
+  public final TextView cauliflowerPrice;
+
+  @NonNull
+  public final RadioButton chili;
+
+  @NonNull
+  public final TextView chiliDescription;
+
+  @NonNull
+  public final TextView chiliPrice;
 
   @NonNull
   public final View divider;
 
   @NonNull
-  public final TextView entreePrice;
+  public final RadioGroup entreeOptions;
 
   @NonNull
-  public final TextView entreeSelection;
+  public final Button nextButton;
 
   @NonNull
-  public final TextView orderSummary;
+  public final RadioButton pasta;
 
   @NonNull
-  public final TextView sidePrice;
+  public final TextView pastaDescription;
 
   @NonNull
-  public final TextView sideSelection;
+  public final TextView pastaPrice;
 
   @NonNull
-  public final Button submitButton;
+  public final RadioButton skillet;
+
+  @NonNull
+  public final TextView skilletDescription;
+
+  @NonNull
+  public final TextView skilletPrice;
 
   @NonNull
   public final TextView subtotal;
-
-  @NonNull
-  public final TextView tax;
-
-  @NonNull
-  public final TextView total;
 
   @Bindable
   protected OrderViewModel mViewModel;
 
   @Bindable
-  protected CheckoutFragment mCheckoutFragment;
+  protected EntreeMenuFragment mEntreeMenuFragment;
 
   protected FragmentEntreeMenuBinding(Object _bindingComponent, View _root, int _localFieldCount,
-      TextView accompanimentPrice, TextView accompanimentSelection, Button cancelButton,
-      View divider, TextView entreePrice, TextView entreeSelection, TextView orderSummary,
-      TextView sidePrice, TextView sideSelection, Button submitButton, TextView subtotal,
-      TextView tax, TextView total) {
+      Button cancelButton, RadioButton cauliflower, TextView cauliflowerDescription,
+      TextView cauliflowerPrice, RadioButton chili, TextView chiliDescription, TextView chiliPrice,
+      View divider, RadioGroup entreeOptions, Button nextButton, RadioButton pasta,
+      TextView pastaDescription, TextView pastaPrice, RadioButton skillet,
+      TextView skilletDescription, TextView skilletPrice, TextView subtotal) {
     super(_bindingComponent, _root, _localFieldCount);
-    this.accompanimentPrice = accompanimentPrice;
-    this.accompanimentSelection = accompanimentSelection;
     this.cancelButton = cancelButton;
+    this.cauliflower = cauliflower;
+    this.cauliflowerDescription = cauliflowerDescription;
+    this.cauliflowerPrice = cauliflowerPrice;
+    this.chili = chili;
+    this.chiliDescription = chiliDescription;
+    this.chiliPrice = chiliPrice;
     this.divider = divider;
-    this.entreePrice = entreePrice;
-    this.entreeSelection = entreeSelection;
-    this.orderSummary = orderSummary;
-    this.sidePrice = sidePrice;
-    this.sideSelection = sideSelection;
-    this.submitButton = submitButton;
+    this.entreeOptions = entreeOptions;
+    this.nextButton = nextButton;
+    this.pasta = pasta;
+    this.pastaDescription = pastaDescription;
+    this.pastaPrice = pastaPrice;
+    this.skillet = skillet;
+    this.skilletDescription = skilletDescription;
+    this.skilletPrice = skilletPrice;
     this.subtotal = subtotal;
-    this.tax = tax;
-    this.total = total;
   }
 
   public abstract void setViewModel(@Nullable OrderViewModel viewModel);
@@ -91,11 +110,11 @@ public abstract class FragmentEntreeMenuBinding extends ViewDataBinding {
     return mViewModel;
   }
 
-  public abstract void setCheckoutFragment(@Nullable CheckoutFragment checkoutFragment);
+  public abstract void setEntreeMenuFragment(@Nullable EntreeMenuFragment entreeMenuFragment);
 
   @Nullable
-  public CheckoutFragment getCheckoutFragment() {
-    return mCheckoutFragment;
+  public EntreeMenuFragment getEntreeMenuFragment() {
+    return mEntreeMenuFragment;
   }
 
   @NonNull

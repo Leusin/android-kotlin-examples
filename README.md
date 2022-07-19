@@ -292,7 +292,7 @@ _strings.xml_
 
 ## 3. cupcake-app
  
-###탐색 그래프
+### 탐색 그래프
 + Jetpack Navigation 라이브러리 포함
 + Activity 에 `NavHost` 추가
 + 탐색 그래프 만들기
@@ -541,3 +541,111 @@ var instantTaskExecutorRule = InstantTaskExecutorRule()
 
 
 ## 5. lunch-tray-app
+
+### 널 안정성
+
++ 널(null) 이란 객체가 선언되었지만 초기화되지 않은 상태, 객체가 주소를가지지 못한상태
+  + 객체는 데이터가 저장된 주소를 참조
+    + 객체 = 참조 변수
+    
++ 널 상태의 객체를 이용하면 _널 포인트 예외(NullPointException)_ 발생
+  + __널 안정성__ : 널 포인트 예외 발생하지 않도록 코드를 작성하는 것 
+
+### 널 안정성 연산자
+
+__[ 널 허용: `?` 연산자 ]__
+
++ 변수 타입은 _널 허용(nullable)_ 과 _널 불허(not nullable)_ 로 구분
+  + 널 불허: 타입 뒤에 `?` 연산자를 붙이지 않음
+  + 널 허용: 타입 뒤에 `?` 연산자를 추가
+    + null 을 대입 가능
+
+```kotlin
+var data: String? = "leusin"
+data = null
+```
+
+__[ 널 안정성 호출: `?.` 연산자 ]__
+
++ 널 허용으로 선언한 변수는 언제든지 null 대입될 발생
+```kotlin
+var data Stirng? = "leusin"
+var lenth = data.age  // -> 널 포인트 예외 발생
+```
+
++ 해당맴버 접근 시 반드시 `?.` 연산자 이용
+  + 변수가 null 이 아니면 맴버에 접근
+  + null 이면 _맴버에 접근하지 않고_ null 반환 (null 이 결과 값이 된다)
+
+```kotlin
+var data Stirng? = "leusin"
+var lenth = data?.age 
+```
+
+```kotlin
+println(a?.b?.c?.d?.length)
+```
++ 여러 객체로 둘러 쌓은 String에 접근하는 코드
+  + 이 객체들 중에 null이 있으면 null을 리턴
+
+__[ 엘비스: `?:` 연산자 ]__
+
++ 변수가 널일 경우 대입해야 하는 값이나 실행햐애하는 구문이 있을 시
+  + 널을 반환하는 `?:` 를 사용
+
+```kotlin
+fun main() {
+  var data: String? = "leusin"
+  println("data = $data : ${data?.age ?: 0}")
+  data = null
+  println("data = $data : ${data?.age ?: 25}")
+}
+```
++ data 가 null 이 아니면 data?.age 참조 변수 반환 null 이면 0 반환
+
+결과
+> data = leusin : 25 <br>
+> data = null : 0 <br>
+
+
+__[ 예외 발생: `!!` 연산자 ]__
+
++ _널 포인트 예외_ 를 __발생시켜야__ 할 떄
+  + 객체가 널일 때 _예외(exception)_ 을 일으키는 연산자
+  + null 이 아닌 것을 보장할 수 있는 객체에만 사용
+
+
+### 안전하기 널 접근하기
+
+1. 조건문으로 접근
++ 가장 쉬우며 흔히 사용
++ if 로 null 체크
++ if-else 루프가 반복되는 경우 가동성을 해칠 수 있음
+
+```kotlin
+if (_entree.value != null) {
+    previousEntreePrice = _entree.value?.price!!
+}
+```
+
+2. `?:`: 엘비스 연산자(Elvis Operation)
+
+3. 안전하게 캐스팅 하기(Safe Cast)
+> 	cast 타동사 [VN] (~으로) ~을 주조하다
+
+```kotlin
+val string: Any = "AnyString"
+val safeString: String? = string as? String
+val safeInt: Int? = string as? Int
+println(safeString)
+println(safeInt)
+```
++ Any 타입이었던 변수를 `as?` 를 이용하여 형변환 시도
+
+4. Collection의 Null 객체를 모두 제거
+```kotlin
+val nullableList: List<Int?> = listOf(1, 2, null, 4)
+val intList: List<Int> = nullableList.filterNotNull()
+println(intList)
+```
++ filterNotNull 메소드를 이용하여 null 객체를 미리 제거
