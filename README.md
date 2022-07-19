@@ -11,6 +11,8 @@
 + [__4. training-sports__](#4-training-sports)
   + [Adaptive Layouts](https://developer.android.com/codelabs/basic-android-kotlin-training-adaptive-layouts?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fandroid-basics-kotlin-unit-3-pathway-5%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fbasic-android-kotlin-training-adaptive-layouts#0)
 + [__5. lunch-try-app__](#5-lunch-try-app)
++ [__6. login-master__](#6-login-master)
+  + [Advanced Android in Kotlin 06.1:Android Login with FirebaseUI](https://developer.android.com/codelabs/advanced-android-kotlin-training-login#0)
 
 ## 1. words-app
 
@@ -649,3 +651,56 @@ val intList: List<Int> = nullableList.filterNotNull()
 println(intList)
 ```
 + filterNotNull 메소드를 이용하여 null 객체를 미리 제거
+
+
+## 6. login-master
+
+### 파이어베이스 프로젝트 추가하기
+1. 파이어베이스 프로젝트 만들기
++ [파이어베이스 콘솔](https://console.firebase.google.com/?pli=1)에 들어가 _프로젝트 추가_ 클릭 
++ 프로잭트 이름 정하고 계속하기 버튼 클릭
+
+2. 파이어베이스에 앱 정보 등록하기
++ 프로젝트 개요 헤이지에서 _앱 추가_ 클릭 후 안드로이드 아이콘 선택
++ _안드로이드 페키지 이름_으로 앱 ID 입력한다
++ 디버그 서명 인증서 `SHA-1` 를 찾아 입력
+  + 우측 상단 `Gradle` > Tasks > android > signingReport
+
+3. 구성 파일 추가
++ 프로젝트 > 프로젝트 설정 > 내앱 `google-services.json` 다운로드
++ 프로젝트 단위 파일 페이지에서 `app` 폴더에 `google-services.json` 저장
+
+4. 파이어베이스 라이브러리 추가
++ build.gradle
+```kotlin
+repositories {
+    // Check that you have the following line (if not, add it):
+    google()  // Google's Maven repository
+  }
+
+  dependencies {
+    // ...
+
+    // Add the following line:
+    classpath 'com.google.gms:google-services:4.3.0'  // Google Services plugin
+  }
+}
+
+allprojects {
+  // ...
+
+  repositories {
+    // Check that you have the following line (if not, add it):
+    google()  // Google's Maven repository
+    // ...
+  }
+```
++ app/build.gradle
+```kotlin
+dependencies {
+  ...
+  
+  implementation 'com.firebaseui:firebase-ui-auth:5.0.0'
+}
+apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin
+```
