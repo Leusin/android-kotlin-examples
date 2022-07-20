@@ -772,7 +772,6 @@ __[ 객체 선언 ]__
 + 싱글톤 패턴
   + 객체의 인스턴스가 하나만 생성되도록 보장하며 객체의 전역 액세스 포인트 하나를 가짐. 
   + 객체 선언의 초기화는 스레드로부터 안전하며 처음 액세스할 때 실행
-  + __예 :__
 ```kotlin
 // Object declaration
 object DataProviderManager {
@@ -786,4 +785,27 @@ object DataProviderManager {
 
 // To refer to the object, use its name directly.
 DataProviderManager.registerDataProvider(...)
+```
+
+__[ 예외 처리 ]__
++ _예외 처리_는 앱이 갑자기 종료되지 않도록 하는 것
++ _예외_는 사용자에게 알리지 않고 갑자기 종료
+  + 컴파일 시간이 아닌 런타임 동안 발생할 수 있는 오류
+
++ 서버에 연결할 때 발생할 수 있는 문제 예
+  + API에 사용된 URL 또는 URI가 잘못됨
+  + 서버를 사용할 수 없어 앱을 서버에 연결할 수 없음
+  + 네트워크 지연 문제
+  + 기기의 인터넷 연결이 불안정하거나 기기가 인터넷에 연결되지 않음
+
++ `try-catch` 블록을 사용하여 런타임에 예외를 처리
+  + `try` 내부에서 예외가 발생한 것으로 예상되는 코드를 실행
+  +  `catch` 앱이 갑자기 종료되는 것을 방지하는 코드 구현
+```kotlin
+try {
+    // some code that can cause an exception.
+}
+catch (e: SomeException) {
+    // handle the exception to avoid abrupt termination.
+}
 ```
