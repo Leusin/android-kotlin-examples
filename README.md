@@ -655,6 +655,62 @@ println(intList)
 
 ## 6. mars-photos-app
 
+Concurrency (병행성, 동시 실행)
+> 병행성(concurrency)은 컴퓨터 과학에서 여러 계산을 동시에 수행하는 시스템의 특성으로, 잠재적으로는 서로 상호 작용이 가능하다. 
+> (위키백과)
+
+__[ 기본 스레드 (UI 스레드) ]__
++ 각 앱에는 전용 스레드가 하나 있고 특히 앱의 UI를 담당
+
+__[ Kotlin 의 코루틴 ]__
++ 협력적인 멀티태스킹(cooperative multitasking) : 상태를 저장하여 중단했다가 재개할 수 있다는 것
++ `Job` 최소 가능한 작업 단위
++ `CoroutineScope` Job 의 하위 요소와 그하위 요소를 관리하는 컨텍스트. `launch()` 및 `async()` 와 같은 함수로 확장
+  + `launch()` 
+    + 취소 가능한 Job 객체에 래핑된 닫힌 코드에서 코루틴을 만듬.
+    + 반환 값이 코루틴 범위 밖에서 필요하지 않을 때 사용
+    + 개발자가 실행을 위해 전달한 코드 블록은 `suspend` 키워드로 표시
+  + `async()`
+    + 미래 값 참조를 보유할 수 있는 취소 가능한 Job 인 `Deferred` 반환
+    + `Deferred` 를 사용하면 즉시 값을 반환하는 것처럼 함수를 계속 호출
+    + 비동기 작업이 언제 반활될지 확시히 알 수 없기 떄문에 `Deferred` 는 자리표시자 역할만
++ `Dispatcher` 코루틴이 사용할 스레드 결정. 
+  + Main 디스패처는 항상 기본 스레드에서 코루틴을 실행
+  + Default 나 IO, Unconfined 와 같은 디스패처는 다른 스레드를 사용
+
+```kotlin
+fun main() {
+   val states = arrayOf("Starting", "Doing Task 1", "Doing Task 2", "Ending")
+   repeat(3) {
+       Thread {
+           println("${Thread.currentThread()} has started")
+           for (i in states) {
+               println("${Thread.currentThread()} - $i")
+               Thread.sleep(50)
+           }
+       }.start()
+   }
+}
+```
+
+```kotlin
+import kotlinx.coroutines.*
+
+fun main() {
+   val states = arrayOf("Starting", "Doing Task 1", "Doing Task 2", "Ending")
+   repeat(3) {
+       GlobalScope.launch {
+           println("${Thread.currentThread()} has started")
+           for (i in states) {
+               println("${Thread.currentThread()} - $i")
+               delay(5000)
+           }
+       }
+   }
+}
+```
+
+
 ### 웹 서비스 및 Restfit
 
 __[ REST ]__
@@ -704,4 +760,30 @@ dependencies{
   implementation "com.squareup.retrofit2:retrofit:2.9.0"
   implementation "com.squareup.retrofit2:converter-scalars:2.9.0"
 }
+```
+
+__[ Retrofit ]__
++ 웹 서비스의 콘텐츠를 기반으로 앱의 네트워크 API를 만듬
++ XML 및 JSON과 같이 많이 사용되는 데이터 형식을 위한 지원이 내장
++ 서비스를 호출하고 소비하는 코드를 만듬
+  + 백그라운드 스레드에서 요청을 실행하는 등의 중요한 세부정보가 포함
+
+__[ 객체 선언 ]__
++ 싱글톤 패턴
+  + 객체의 인스턴스가 하나만 생성되도록 보장하며 객체의 전역 액세스 포인트 하나를 가짐. 
+  + 객체 선언의 초기화는 스레드로부터 안전하며 처음 액세스할 때 실행
+  + __예 :__
+```kotlin
+// Object declaration
+object DataProviderManager {
+    fun registerDataProvider(provider: DataProvider) {
+        // ...
+    }
+​
+    val allDataProviders: Collection<DataProvider>
+        get() = // ...
+}
+
+// To refer to the object, use its name directly.
+DataProviderManager.registerDataProvider(...)
 ```
