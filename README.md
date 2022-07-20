@@ -809,3 +809,23 @@ catch (e: SomeException) {
     // handle the exception to avoid abrupt termination.
 }
 ```
+
+__[ 예외 처리 ]__
++ JSON 응답은 대괄호로 표시된 배열
+  + 이 배열에는 JSON 객체가 포함
++ JSON 객체는 중괄호로 묶여 있음
++ 각 JSON 객체에는 이름-값 쌍의 집합이 포함
+  + 이름과 값은 콜론으로 구분
++ 이름은 따옴표로 묶여 있음
++ 값은 숫자, 문자열, 부울, 배열, 객체(JSON 객체) 또는 null 일 수 있습니다.
+
+__[ Moshi 라이브러리 종속 항목 추가 ]__
+```kotlin
+// Moshi
+implementation 'com.squareup.moshi:moshi-kotlin:1.9.3'
+```
+
+__[ @Json 주석 ]__
++ JSON 응답의 키 이름으로 인해 Kotlin 속성이 혼란스러워지거나 권장 코딩 스타일과 일치하지 않을 수 있음
+  + JSON 파일에서 img_src 키는 스네이크 표기법을 사용하지만 속성의 Kotlin 규칙은 카멜 표기법을 사용
++ 데이터 클래스에 JSON 응답의 키 이름과 다른 변수 이름을 사용하려면 `@Json` 주석을 사용
